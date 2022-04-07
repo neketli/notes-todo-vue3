@@ -175,6 +175,7 @@ export default {
     outline: none;
     padding: 0;
     width: 100%;
+	overflow: hidden;
   }
 
   &__input {

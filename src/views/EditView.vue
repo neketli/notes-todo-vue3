@@ -4,7 +4,7 @@
       <!-- Заголовок заметки -->
       <div class="note__header">
         <label class="note__header-label">
-          <h2>Зголовок заметки</h2>
+          <h2>Заголовок заметки</h2>
           <input
             id="title"
             @change="editNoteTitle"
@@ -384,6 +384,7 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
+	flex-wrap: wrap;
   }
 
   &__save-notification {

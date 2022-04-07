@@ -65,7 +65,6 @@ export default {
 
 body {
   background-size: cover;
-  perspective: 1000px;
   background: linear-gradient(250deg, $gradientFrom, $gradientTo);
   background-size: 400% 400%;
   animation: gradient 10s ease infinite;

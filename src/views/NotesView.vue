@@ -26,7 +26,9 @@
       <p>Как-то пусто :(</p>
       <p>Заведём новую заметочку?</p>
     </div>
-    <Dialog
+
+
+	<Dialog
       @closeDialog="dialogHideDeleteNote"
       @confirm="deleteNote"
       @reject="dialogHideDeleteNote"
@@ -75,7 +77,7 @@ export default {
     },
     deleteNote() {
       this.$store.dispatch("deleteNote", this.deleteNoteId);
-      this.DialogHideDeleteNote();
+      this.dialogHideDeleteNote();
     },
   },
   components: {
