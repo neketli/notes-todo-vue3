@@ -118,7 +118,7 @@ export default {
   border-radius: 8px;
   padding: 15px;
 
-  background-color: rgba(157, 157, 157, 0.6);
+  background-color: rgba(222, 222, 222, 0.3);
   box-shadow: 0 0 5px rgba(128, 128, 128, 1);
 
   &.empty {
