@@ -1,19 +1,10 @@
 # notes-todo-vue
 
-## Project setup
+## You can run it by
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Simple note app for practice.
+Made by vuejs, vuex, vue-router and scss.
