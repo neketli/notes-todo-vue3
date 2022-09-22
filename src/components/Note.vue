@@ -6,7 +6,7 @@
     </div>
 
     <!-- Список задач -->
-    <div class="note__body">
+    <div class="note__content">
       <ul class="note__tasks tasks">
         <li
           class="tasks__item"
@@ -14,29 +14,25 @@
           v-for="item in tasks"
           :key="item.id"
         >
-          {{ item.description }}
+          <span>{{ item.description }}</span>
         </li>
       </ul>
-      <router-link class="note__ramain" :to="notePath" v-if="tasksRemain > 0">
+      <router-link class="note__remain" :to="notePath" v-if="tasksRemain > 0">
         и ещё {{ tasksRemain }} задач{{ tasksRemain < 5 ? "и" : "" }}
       </router-link>
 
-      <div class="controls">
+      <div class="note__controls">
         <router-link :to="notePath">
-          <Controls class="btn note__btn-edit" :icon="'edit'" />
+          <Button type="controls" icon="edit" />
         </router-link>
-        <Controls
-          @click="deleteNote"
-          class="btn note__btn-remove"
-          :icon="'delete'"
-        />
+        <Button @click="deleteNote" type="controls" icon="delete" />
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import Controls from "@/components/Controls";
+import Button from "./Button.vue";
 
 export default {
   data() {
@@ -74,7 +70,7 @@ export default {
     },
   },
   components: {
-    Controls,
+    Button,
   },
 };
 </script>
@@ -88,7 +84,7 @@ export default {
   box-shadow: 0 0 10px $gray;
   max-width: 450px;
   width: 100%;
-  margin: 15px 0;
+  padding: 15px;
   transition: 0.5s ease;
 
   &__header {
@@ -98,24 +94,28 @@ export default {
     }
   }
 
-  &__body {
+  &__content {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    gap: 10px;
   }
 
-  &__btn-remove:hover {
-    color: $red;
-  }
-
-  &__ramain {
+  &__remain {
     color: $green;
     text-align: center;
     margin: 0 auto;
   }
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
   }
 }
 
@@ -124,7 +124,7 @@ export default {
   font-size: 1.5rem;
   margin: 20px;
 
-  & li:before {
+  &__item:before {
     content: "•";
     color: $green;
     padding-right: 10px;
@@ -132,14 +132,9 @@ export default {
 
   &__item.is-completed {
     opacity: 0.35;
-    text-decoration: line-through;
+    span {
+      text-decoration: line-through;
+    }
   }
-}
-
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 15px;
 }
 </style>

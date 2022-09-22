@@ -12,7 +12,7 @@
       @keydown.enter.prevent="$event.target.blur()"
       @blur="editMode = false"
       @change="editTaskDescription"
-      class="task__desctiption task__input"
+      class="task__input"
       v-show="editMode"
       v-model="taskDescription"
     />
@@ -24,24 +24,17 @@
 
     <!-- Кнопки управления -->
 
-    <Controls
-      type="button"
-      class="btn task__btn-edit"
-      @click="turnOnEditMode"
-      :icon="'edit'"
-    />
+    <div class="task__controls">
+      <Button type="controls" @click="turnOnEditMode" icon="edit" />
 
-    <Controls
-      type="button"
-      class="btn task__btn-remove"
-      @click="deleteTask"
-      :icon="'delete'"
-    />
+      <Button type="controls" @click="deleteTask" icon="delete" />
+    </div>
   </li>
 </template>
 
 <script>
-import Controls from "@/components/Controls";
+import Button from "@/components/Button";
+import Input from "./Input.vue";
 
 export default {
   props: ["task-id"],
@@ -80,7 +73,8 @@ export default {
     },
   },
   components: {
-    Controls,
+    Button,
+    Input,
   },
   methods: {
     turnOnEditMode() {
@@ -105,7 +99,8 @@ export default {
 .task {
   display: flex;
   align-items: center;
-  padding: 5px 0;
+  padding: 5px;
+  gap: 10px;
 
   &__checkbox {
     cursor: pointer;
@@ -160,9 +155,11 @@ export default {
     }
   }
 
-  &.is-completed .task__description {
-    opacity: 0.35;
-    text-decoration: line-through;
+  &.is-completed {
+    .task__description {
+      opacity: 0.35;
+      text-decoration: line-through;
+    }
   }
 
   &__description {
@@ -175,11 +172,18 @@ export default {
     outline: none;
     padding: 0;
     width: 100%;
-	overflow: hidden;
+    overflow: hidden;
   }
 
   &__input {
-    width: 100%;
+    outline: none;
+    border: 1px solid rgba($color: #000000, $alpha: 0.2);
+    padding: 10px;
+    border-radius: 10px;
+  }
+  &__controls {
+    display: flex;
+    gap: 10px;
   }
 }
 </style>

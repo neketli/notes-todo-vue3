@@ -1,19 +1,18 @@
 <template>
   <div class="dialog">
-    <div class="dialog__overlay" @click="closeDialog">
-      
+    <div class="dialog__overlay" @click="closeDialog"></div>
+    <div class="dialog__content">
+      <h3>{{ text }}</h3>
+      <div class="dialog__buttons">
+        <Button @click="confirm" type="danger">{{ apply }}</Button>
+        <Button @click="reject" type="controls">{{ cancel }}</Button>
       </div>
-	  <div class="dialog__content">
-        <h3>{{ text }}</h3>
-        <div class="dialog__btns">
-          <button @click="confirm" class="btn btn-danger">{{ apply }}</button>
-          <button @click="reject" class="btn btn-controls">{{ cancel }}</button>
-        </div>
     </div>
   </div>
 </template>
 
 <script>
+import Button from "./Button.vue";
 export default {
   props: ["text", "apply", "cancel"],
   methods: {
@@ -27,6 +26,7 @@ export default {
       this.$emit("reject");
     },
   },
+  components: { Button },
 };
 </script>
 
@@ -46,22 +46,22 @@ export default {
   padding: 25px;
 
   &__overlay {
-  background-color: hsla(0, 0%, 0%, .7);
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: hsla(0, 0%, 0%, 0.7);
   }
+
   &__content {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  box-sizing: border-box;
-  max-width: 450px;
-  padding: 30px;
-  position: relative;
-  width: 100%;
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    padding: 30px;
+
+    background: #fff;
+    border-radius: 8px;
 
     & h3 {
       color: $red;
@@ -70,14 +70,10 @@ export default {
       margin-bottom: 30px;
     }
   }
-  &__btns {
+  &__buttons {
     display: flex;
     justify-content: flex-end;
+    gap: 20px;
   }
-}
-
-.btn {
-  margin: 15px;
-  padding: 10px;
 }
 </style>

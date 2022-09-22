@@ -1,11 +1,8 @@
 <template>
   <div class="page__notes">
     <div class="page__controls">
-      <router-link
-        class="btn btn-primary page__btn-add"
-        :to="{ name: 'noteAdd' }"
-      >
-        Новая заметка
+      <router-link class="page__btn-add" :to="{ name: 'noteAdd' }">
+        <Button> Новая заметка </Button>
       </router-link>
       <h2 class="page__count-notes">
         Текущих задач: {{ notes.length }} <br />
@@ -27,8 +24,7 @@
       <p>Заведём новую заметочку?</p>
     </div>
 
-
-	<Dialog
+    <Dialog
       @closeDialog="dialogHideDeleteNote"
       @confirm="deleteNote"
       @reject="dialogHideDeleteNote"
@@ -44,6 +40,7 @@
 import Note from "@/components/Note";
 import Dialog from "@/components/Dialog";
 import Controls from "@/components/Controls";
+import Button from "@/components/Button.vue";
 
 export default {
   data() {
@@ -84,6 +81,7 @@ export default {
     Note,
     Controls,
     Dialog,
+    Button,
   },
 };
 </script>
@@ -105,23 +103,19 @@ export default {
     text-align: right;
     font-size: 1.5rem;
   }
-
-  &__btn-add {
-    display: flex;
-    padding: 10px;
-  }
 }
 
 .notes {
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 30px;
   margin: 50px 0;
   border-radius: 8px;
   padding: 15px;
 
-  background-color: rgba(222, 222, 222, 0.3);
-  box-shadow: 0 0 5px rgba(128, 128, 128, 1);
+  // background-color: rgba(222, 222, 222, 0.3);
+  // box-shadow: 0 0 5px rgba(128, 128, 128, 1);
 
   &.empty {
     color: hsla(0, 0%, 0%, 0.35);

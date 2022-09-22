@@ -1,6 +1,6 @@
 <template>
   <button class="conrols__btn">
-    <i :class="icons[this.icon]" aria-hidden="true"></i>
+    <i :class="currentIcon" aria-hidden="true"></i>
   </button>
 </template>
 
@@ -18,16 +18,27 @@ export default {
       },
     };
   },
-  props: ["icon"],
+  computed: {
+    currentIcon() {
+      return this.icons[this.icon];
+    },
+  },
+  props: {
+    icon: {
+      type: String,
+      required: true,
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .controls__btn {
-  border-radius: 50%;
+  padding: 10px 15px;
+  border-radius: 10px;
 
   & i {
-    font-size: 32px;
+    font-size: 1.5rem;
   }
 }
 </style>

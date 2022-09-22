@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
-    <h1 class="logo">
+  <div class="wrapper">
+    <h1 class="title">
       <router-link to="/"
         >Заметочки
-        <svg viewBox="0 0 512 512">
+        <svg class="logo" viewBox="0 0 512 512">
           <path
             class="cls-1"
             d="M326.82,71.53a11.79,11.79,0,0,0-1.69.14,24.79,24.79,0,0,0-24.62-22.14H128.2a24.79,24.79,0,0,0-24.6,22c-27.76.75-50.09,20.91-50.09,45.62V419c0,25.17,23.18,45.65,51.67,45.65H326.82c28.49,0,51.67-20.48,51.67-45.65V117.18C378.49,92,355.31,71.53,326.82,71.53Zm-200.7,2.75a2.08,2.08,0,0,1,2.08-2.08H300.51a2.08,2.08,0,0,1,2.08,2.08V93.43a2.08,2.08,0,0,1-2.08,2.08H128.2a2.08,2.08,0,0,1-2.08-2.08ZM355.81,419c0,12.66-13,23-29,23H105.18c-16,0-29-10.31-29-23V117.18C76.19,105,88.28,95,103.47,94.25a24.77,24.77,0,0,0,24.73,23.94H300.51a24.77,24.77,0,0,0,24.74-24.1,11.73,11.73,0,0,0,1.57.12c16,0,29,10.3,29,23Z"
@@ -63,36 +63,45 @@ export default {
   padding: 0;
 }
 
+html,
+.wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.wrapper {
+  margin: 0 auto;
+}
+
 body {
-  background-size: cover;
-  background: linear-gradient(250deg, $gradientFrom, $gradientTo);
-  background-size: 400% 400%;
-  animation: gradient 10s ease infinite;
   font-family: "Open Sans";
+  height: 100%;
+  width: 100%;
+
+  background-color: #fafafa;
+  background-image: radial-gradient(
+      rgba(58, 91, 220, 1) 0.5px,
+      transparent 0.5px
+    ),
+    radial-gradient(rgba(58, 91, 220, 1) 0.5px, #fafafa 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
 }
 
-svg {
-  max-width: 6vw;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+a {
+  text-decoration: none;
 }
 
 .logo {
+  max-width: 75px;
+  margin-left: 15px;
+}
+
+.title {
   font-size: 3rem;
   font-weight: 600;
   margin: 30px 0;
   text-align: center;
-  text-shadow: 0 0 5px white;
 
   & a {
     color: currentColor;
@@ -100,41 +109,6 @@ svg {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-}
-
-.btn {
-  appearance: none;
-  background: none;
-  border: none;
-  text-decoration: none;
-  color: black;
-  border-radius: 16px;
-  cursor: pointer;
-  font-size: 1.5rem;
-  outline: 0;
-  padding: 5px;
-  opacity: 0.8;
-  transition: 0.1s ease-out;
-
-  &-controls {
-    background-color: $gray;
-    border-radius: 32px;
-  }
-
-  &-primary {
-    background-color: $green;
-  }
-
-  &-danger {
-    background-color: $red;
-  }
-
-  &:hover,
-  &:focus {
-    opacity: 1;
-    transform: scale(1.05);
-    box-shadow: 0 0 6px white;
   }
 }
 </style>

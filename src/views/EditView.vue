@@ -1,19 +1,18 @@
 <template>
-  <div class="page__edit">
+  <div class="page-edit">
     <form @submit.prevent="saveNote" class="note">
       <!-- Заголовок заметки -->
       <div class="note__header">
-        <label class="note__header-label">
+        <label class="note__title">
           <h2>Заголовок заметки</h2>
-          <input
-            id="title"
+
+          <Input
             @change="editNoteTitle"
             ref="noteTitleEl"
-            type="text"
             v-model="noteTitle"
-            placeholder=" "
-          />
-          <label for="title">Что будем делать?</label>
+            id="title"
+            >Что будем делать?</Input
+          >
         </label>
       </div>
       <!-- Список задач и кнопки -->
@@ -30,15 +29,9 @@
         </ul>
         <!-- Добавить задачу-->
         <form @submit.prevent="addNewTask" class="note__new-task">
-          <input
-            id="todo"
-            type="text"
-            v-model="newTaskDescription"
-            placeholder=" "
-          />
-          <label for="todo">Новая задачка?</label>
+          <Input id="todo" v-model="newTaskDescription">Новая задачка?</Input>
 
-          <Controls
+          <Button
             title="Добавить задачу"
             class="btn"
             :disabled="!newTaskDescription"
@@ -46,49 +39,40 @@
           />
         </form>
         <!-- Кнопки управления -->
-        <div class="note__controls controls">
-          <div class="controls">
-            <span
-              v-if="!modeNew"
-              :class="{ 'is-visible': isNoteSaved }"
-              class="note__save-notification"
-              >Сохранено</span
-            >
-            <button class="btn btn-primary" type="submit">
-              {{ modeNew ? "Добавить заметку" : "Сохранить" }}
-            </button>
-          </div>
-          <button
-            type="button"
-            class="btn btn-danger"
-            @click="dialogShowDeleteNote"
+        <div class="note__controls">
+          <span
             v-if="!modeNew"
+            :class="{ 'is-visible': isNoteSaved }"
+            class="note__save-notification"
+            >Сохранено</span
           >
+          <Button type="primary">
+            {{ modeNew ? "Добавить заметку" : "Сохранить" }}
+          </Button>
+
+          <Button type="danger" @click="dialogShowDeleteNote" v-if="!modeNew">
             Удалить
-          </button>
-          <Controls
+          </Button>
+          <Button
             title="Закрыть"
-            type="button"
-            class="btn btn-controls"
+            type="controls"
             @click="dialogShowCancelNote"
             icon="close"
           />
-          <Controls
+          <Button
             title="Отменить действие"
-            type="button"
             :disabled="historyCurrent < 1 ? true : false"
             @click="undo"
-            class="btn btn-controls"
-            :icon="'undo'"
+            type="controls"
+            icon="undo"
           />
 
-          <Controls
+          <Button
             title="Вернуть действие"
-            type="button"
             :disabled="historyCurrent > historyCount ? true : false"
             @click="redo"
-            class="btn btn-controls"
-            :icon="'redo'"
+            type="controls"
+            icon="redo"
           />
         </div>
       </div>
@@ -104,7 +88,6 @@
       apply="Удалить"
       cancel="Я предумал"
     />
-
     <Dialog
       @closeDialog="dialogHideCancelNote"
       @confirm="cancelNote"
@@ -119,7 +102,7 @@
       @confirm="deleteNote"
       @reject="dialogHideDeleteNote"
       v-show="isDialogDeleteNoteActive"
-      :text="'Точно хотите удалить заметку?'"
+      text="Точно хотите удалить заметку?"
       apply="Удалить"
       cancel="Отмена"
     />
@@ -129,8 +112,9 @@
 <script>
 import Dialog from "@/components/Dialog";
 import Task from "@/components/Task";
-import Controls from "@/components/Controls";
+import Button from "@/components/Button";
 import { v4 as uuidv4 } from "uuid";
+import Input from "@/components/Input.vue";
 
 export default {
   created() {
@@ -184,7 +168,8 @@ export default {
   components: {
     Task,
     Dialog,
-    Controls,
+    Button,
+    Input,
   },
   methods: {
     dialogShowDeleteTask(taskId) {
@@ -258,18 +243,16 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/assets/_vars.scss";
 
-.page {
-  &__edit {
-    align-items: flex-start;
-    display: flex;
-    left: 25px;
-    margin: 50px auto;
-    position: relative;
-    max-width: 500px;
-  }
+.page-edit {
+  align-items: flex-start;
+  display: flex;
+  left: 25px;
+  margin: 50px auto;
+  position: relative;
+  max-width: 500px;
 }
 
 .note {
@@ -278,113 +261,49 @@ export default {
   box-shadow: 0 0 10px $gray;
   max-width: 450px;
   width: 100%;
-  &__header {
-    padding: 30px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
-    &-label {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      & h2 {
-        text-align: center;
-      }
-
-      & input {
-        border: none;
-        border-radius: 12px;
-        font-size: 1rem;
-        font-weight: 700;
-        padding: 20px;
-        margin-top: 30px;
-        border-bottom: 0.1rem solid #16213e;
-        outline: none;
-      }
-
-      & label {
-        position: absolute;
-        font-size: 1.5rem;
-        padding-left: 1rem;
-        color: #bdbdbd;
-        transform: translateY(4rem);
-        transform-origin: left top;
-        cursor: text;
-        transition: all 0.3s;
-      }
-
-      & input:focus,
-      & input:not(:placeholder-shown) {
-        transition: all 0.2s linear;
-        border-bottom: 0.2rem solid $green;
-      }
-
-      & input:focus ~ label,
-      & input:not(:placeholder-shown) ~ label {
-        padding: 0;
-        color: $green;
-        transform: translateY(2.5rem) scale(0.8);
-      }
+  &__title {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    & h2 {
+      text-align: center;
     }
+  }
+
+  &__input {
+    margin-top: 30px;
   }
 
   &__body {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  &__tasks {
-    width: 80%;
+    gap: 20px;
   }
 
   &__new-task {
     position: relative;
-    & input {
-      border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 700;
-      padding: 20px;
-      margin-top: 30px;
-      border-bottom: 0.1rem solid #16213e;
-      outline: none;
-    }
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
 
-    & label {
-      position: absolute;
-      top: 0;
-      left: 0;
-      font-size: 1.5rem;
-      padding-left: 1rem;
-      width: 100%;
-      color: #bdbdbd;
-      transform: translateY(3rem);
-      transform-origin: left top;
-      cursor: text;
-      transition: all 0.3s;
-    }
-
-    & input:focus,
-    & input:not(:placeholder-shown) {
-      transition: all 0.2s linear;
-      border-bottom: 0.2rem solid $green;
-    }
-
-    & input:focus ~ label,
-    & input:not(:placeholder-shown) ~ label {
-      padding: 0;
-      color: $green;
-      transform: translateY(1rem) scale(0.8);
+    .button {
+      max-height: 50px;
     }
   }
 
   &__controls {
-    margin: 30px auto;
     width: 100%;
     display: flex;
-    display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-	flex-wrap: wrap;
+    flex-wrap: wrap;
+    gap: 30px;
   }
 
   &__save-notification {
@@ -411,7 +330,7 @@ export default {
   }
 }
 
-.btn:disabled {
+.button:disabled {
   cursor: default;
   opacity: 0.5;
 }
@@ -432,9 +351,5 @@ export default {
     opacity: 0;
     transform: translate(-50%, -100%);
   }
-}
-
-.btn {
-  margin: 10px;
 }
 </style>
